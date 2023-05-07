@@ -4,13 +4,9 @@ import { ForumSideBar } from '../components/forum-side-bar';
 
 export const Forum = () => {
   return (
-    <>
+    <React.Fragment>
+      <Navbar />
       <ForumSideBar />
-      <div>
-        {' '}
-        <Navbar />
-        <h1 className="text-white">forum</h1>
-      </div>
-    </>
+    </React.Fragment>
   );
 };

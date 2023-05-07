@@ -17,8 +17,8 @@ export function App() {
     <BrowserRouter>
       <div className="p-4">
         <Routes>
-          {AppRoutes.map((route) => (
-            <Route path={route.path} element={route.element} />
+          {AppRoutes.map((route, index) => (
+            <Route key={index} path={route.path} element={route.element} />
           ))}
         </Routes>
       </div>

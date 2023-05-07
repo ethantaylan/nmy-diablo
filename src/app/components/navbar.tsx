@@ -18,8 +18,8 @@ export const Navbar = () => {
     <div className="w-100 flex justify-between text-white">
       <NavLink to="/">ENEMY</NavLink>
       <ul className="flex">
-        {Links.map((link) => (
-          <li className="mx-4">
+        {Links.map((link, index) => (
+          <li key={index} className="mx-4">
             <NavLink to={link.href}>{link.title.toUpperCase()}</NavLink>
           </li>
         ))}
