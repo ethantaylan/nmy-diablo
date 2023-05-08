@@ -1,6 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Accueil } from './pages/accueil';
 import { Forum } from './pages/forum';
+import { GlobalContextProvider, useGlobalDispatch } from './context/context';
+import React from 'react';
+import { supabase } from './config';
 
 interface AppRoutes {
   path: string;
@@ -8,10 +11,44 @@ interface AppRoutes {
 }
 
 export function App() {
+  const [user, setUser] = React.useState<any>(() =>
+    JSON.parse(
+      localStorage.getItem('sb-mtpdbpclldolqxsljepu-auth-token') || 'null'
+    )
+  );
+  const [userName, setUserName] = React.useState<string>('');
+
+  const dispatch = useGlobalDispatch();
+
   const AppRoutes: AppRoutes[] = [
-    { path: '/', element: <Accueil /> },
+    { path: '/', element: <Accueil onClick={() => signInWithDiscord()} /> },
     { path: '/forum', element: <Forum /> },
   ];
+
+  const signInWithDiscord = async () => {
+    const { data } = await supabase.auth.signInWithOAuth({
+      provider: 'discord',
+    });
+    localStorage.setItem(
+      'sb-mtpdbpclldolqxsljepu-auth-token',
+      JSON.stringify(data)
+    );
+    setUser(data);
+  };
+
+  // const signOut = async () => {
+  //   await supabase.auth.signOut();
+  //   setUser(null);
+  //   // remove user data from localStorage
+  //   localStorage.removeItem('user');
+  // };
+
+  React.useEffect(() => {
+    if (user) {
+      setUserName(user?.user?.user_metadata?.name);
+      dispatch({ type: 'SET_USER_NAME', userName });
+    } 
+  }, [dispatch, user, userName]);
 
   return (
     <BrowserRouter>

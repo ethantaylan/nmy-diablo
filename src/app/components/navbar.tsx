@@ -1,18 +1,26 @@
 import { NavLink } from 'react-router-dom';
 import { UserIcon } from '../icons/icons';
+import { useGlobalContext } from '../context/context';
+import React from 'react';
 
 interface Links {
   title: string;
   href: string;
 }
 
-export const Navbar = () => {
+interface NavbarProps {
+  onClick: () => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ onClick }) => {
   const Links: Links[] = [
     { title: 'Accueil', href: '/' },
     { title: 'Roster', href: '/roster' },
     { title: 'Forum', href: '/forum' },
     { title: 'Contact', href: '/contact' },
   ];
+
+  const { userName } = useGlobalContext();
 
   return (
     <div className="w-100 flex justify-between text-white">
@@ -24,7 +32,8 @@ export const Navbar = () => {
           </li>
         ))}
       </ul>
-      {UserIcon('h-5')}
+      {userName && <span className='text-white'>{userName}</span>}
+      <span onClick={onClick}>{UserIcon('h-5')}</span>
     </div>
   );
 };
