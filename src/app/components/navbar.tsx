@@ -68,7 +68,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnect, onSignOut }) => {
           )}
         </div>
       ) : (
-        <span className="text-neutral-500" onClick={onConnect}>
+        <span onClick={onConnect}>
           {UserIcon('h-5')}
         </span>
       )}

@@ -1,9 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Accueil } from './pages/accueil';
 import { Forum } from './pages/forum';
-import { GlobalContextProvider, useGlobalDispatch } from './context/context';
+import { useGlobalDispatch } from './context/context';
 import React from 'react';
 import { supabase } from './config';
+import { Navbar } from './components/navbar';
 
 interface AppRoutes {
   path: string;
@@ -24,12 +25,7 @@ export function App() {
   const AppRoutes: AppRoutes[] = [
     {
       path: '/',
-      element: (
-        <Accueil
-          onSignOut={() => signOut()}
-          onConnect={() => signInWithDiscord()}
-        />
-      ),
+      element: <Accueil />,
     },
     { path: '/forum', element: <Forum /> },
   ];
@@ -74,6 +70,10 @@ export function App() {
   return (
     <BrowserRouter>
       <div className="p-4">
+        <Navbar
+          onSignOut={() => signOut()}
+          onConnect={() => signInWithDiscord()}
+        />
         <Routes>
           {AppRoutes.map((route, index) => (
             <Route key={index} path={route.path} element={route.element} />
