@@ -36,6 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnect, onSignOut }) => {
     { title: 'Autres' },
   ];
 
+
   return (
     <div className="w-100 flex h-20 items-center justify-between bg-neutral-950 p-5 ">
       <span
@@ -47,7 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnect, onSignOut }) => {
       <ul className="flex">
         {Links.map((link, index) => (
           <li key={index} className="mx-4">
-            <NavLink className="text-gray-400 font-bold" to={link.href}>
+            <NavLink className="font-bold text-gray-400" to={link.href}>
               {link.title.toUpperCase()}
             </NavLink>
           </li>

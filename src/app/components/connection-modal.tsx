@@ -48,6 +48,7 @@ export const ConnectionModal: React.FC<ConnectionModalProps> = ({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-neutral-900 p-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <Auth
+                  redirectTo="/test"
                   supabaseClient={supabase}
                   socialLayout="horizontal"
                   appearance={{
