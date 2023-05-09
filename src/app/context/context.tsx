@@ -1,32 +1,30 @@
-import React, { createContext, Dispatch, PropsWithChildren, useContext, useReducer } from 'react';
+import React, {
+  createContext,
+  Dispatch,
+  PropsWithChildren,
+  useContext,
+  useReducer,
+} from 'react';
 
 export interface GlobalContext {
-  darkMode: boolean;
   userName: string;
+  userAvatar: string;
 }
 
 const initialState: GlobalContext = {
-  darkMode: true,
   userName: '',
+  userAvatar: '',
 };
 
 const reducer = (state: GlobalContext, action: any): GlobalContext => {
   switch (action.type) {
-    case 'DARK':
-      return {
-        ...state,
-        darkMode: true,
-      };
-    case 'LIGHT':
-      return {
-        ...state,
-        darkMode: false,
-      };
     case 'SET_USER_NAME':
       return {
         ...state,
         userName: action.userName,
       };
+    case 'SET_USER_AVATAR':
+      return { ...state, userAvatar: action.userAvatar };
     default:
       return state;
   }
@@ -34,9 +32,13 @@ const reducer = (state: GlobalContext, action: any): GlobalContext => {
 
 export const StateContext = createContext<GlobalContext>(initialState);
 
-export const DispatchContext = createContext<Dispatch<any> | undefined>(undefined);
+export const DispatchContext = createContext<Dispatch<any> | undefined>(
+  undefined
+);
 
-export const GlobalContextProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+export const GlobalContextProvider: React.FC<PropsWithChildren> = ({
+  children,
+}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <StateContext.Provider value={state}>

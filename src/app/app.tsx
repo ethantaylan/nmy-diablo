@@ -17,11 +17,20 @@ export function App() {
     )
   );
   const [userName, setUserName] = React.useState<string>('');
+  const [userAvatar, setUserAvatar] = React.useState<string>('');
 
   const dispatch = useGlobalDispatch();
 
   const AppRoutes: AppRoutes[] = [
-    { path: '/', element: <Accueil onClick={() => signInWithDiscord()} /> },
+    {
+      path: '/',
+      element: (
+        <Accueil
+          onSignOut={() => signOut()}
+          onConnect={() => signInWithDiscord()}
+        />
+      ),
+    },
     { path: '/forum', element: <Forum /> },
   ];
 
@@ -34,21 +43,33 @@ export function App() {
       JSON.stringify(data)
     );
     setUser(data);
+    localStorage.getItem('sb-mtpdbpclldolqxsljepu-auth-token') &&
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
   };
 
-  // const signOut = async () => {
-  //   await supabase.auth.signOut();
-  //   setUser(null);
-  //   // remove user data from localStorage
-  //   localStorage.removeItem('user');
-  // };
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    window.location.reload();
+    localStorage.removeItem('sb-mtpdbpclldolqxsljepu-auth-token');
+  };
 
   React.useEffect(() => {
     if (user) {
-      setUserName(user?.user?.user_metadata?.name);
+      setUserName(user?.user?.user_metadata?.full_name);
+      setUserAvatar(user?.user?.user_metadata?.avatar_url);
       dispatch({ type: 'SET_USER_NAME', userName });
-    } 
-  }, [dispatch, user, userName]);
+      dispatch({ type: 'SET_USER_AVATAR', userAvatar });
+    }
+  }, [dispatch, user, userName, userAvatar]);
+
+  // React.useEffect(() => {
+  //   if (user === null) {
+  //     window.location.reload();
+  //   }
+  // }, [user]);
 
   return (
     <BrowserRouter>

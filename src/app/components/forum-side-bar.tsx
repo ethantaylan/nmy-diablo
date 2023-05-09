@@ -1,6 +1,4 @@
 export const ForumSideBar = () => {
-
-
   return (
     <div className="text-white">
       <h1>FORUM</h1>

@@ -2,13 +2,14 @@ import React from 'react';
 import { Navbar } from '../components/navbar';
 
 interface AccueilProps {
-  onClick: () => void;
+  onConnect: () => void;
+  onSignOut: () => void;
 }
 
-export const Accueil: React.FC<AccueilProps> = ({ onClick }) => {
+export const Accueil: React.FC<AccueilProps> = ({ onConnect, onSignOut }) => {
   return (
     <div>
-      <Navbar onClick={onClick} />
+      <Navbar onSignOut={onSignOut} onConnect={onConnect} />
     </div>
   );
 };
