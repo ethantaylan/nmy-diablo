@@ -3,9 +3,13 @@
 @tailwind utilities;
 @tailwind variants;
 
-html, body, #root {
-    height: 100%;
-    background-image: url('./app/assets/bg.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
+html,
+body,
+#root {
+  height: 100%;
+  background-color: rgb(10, 10, 10);
+}
+
+.active {
+  color: white;
 }

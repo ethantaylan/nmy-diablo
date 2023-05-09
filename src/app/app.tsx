@@ -5,6 +5,8 @@ import { useGlobalDispatch } from './context/context';
 import React from 'react';
 import { supabase } from './config';
 import { Navbar } from './components/navbar';
+import { Auth } from '@supabase/auth-ui-react';
+import { ThemeSupa } from '@supabase/auth-ui-shared';
 
 interface AppRoutes {
   path: string;
@@ -69,17 +71,16 @@ export function App() {
 
   return (
     <BrowserRouter>
-      <div className="p-4">
-        <Navbar
-          onSignOut={() => signOut()}
-          onConnect={() => signInWithDiscord()}
-        />
-        <Routes>
-          {AppRoutes.map((route, index) => (
-            <Route key={index} path={route.path} element={route.element} />
-          ))}
-        </Routes>
-      </div>
+
+      <Navbar
+        onSignOut={() => signOut()}
+        onConnect={() => signInWithDiscord()}
+      />
+      <Routes>
+        {AppRoutes.map((route, index) => (
+          <Route key={index} path={route.path} element={route.element} />
+        ))}
+      </Routes>
     </BrowserRouter>
   );
 }

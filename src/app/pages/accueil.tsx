@@ -1,9 +1,12 @@
 import React from 'react';
+import { Banner } from '../components/banner';
+import ConnectionModal from '../components/connection-modal';
 
 export const Accueil: React.FC = () => {
   return (
     <div>
-      <h1>Accueil</h1>
+      <Banner />
+      <ConnectionModal />
     </div>
   );
 };
