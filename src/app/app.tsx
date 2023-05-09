@@ -5,8 +5,8 @@ import { useGlobalDispatch } from './context/context';
 import React from 'react';
 import { supabase } from './config';
 import { Navbar } from './components/navbar';
-import { Auth } from '@supabase/auth-ui-react';
-import { ThemeSupa } from '@supabase/auth-ui-shared';
+import { ConnectionModal } from './components/connection-modal';
+import { SupabaseClient } from '@supabase/supabase-js';
 
 interface AppRoutes {
   path: string;
@@ -21,6 +21,7 @@ export function App() {
   );
   const [userName, setUserName] = React.useState<string>('');
   const [userAvatar, setUserAvatar] = React.useState<string>('');
+  const [modal, setModal] = React.useState<boolean>(false);
 
   const dispatch = useGlobalDispatch();
 
@@ -31,21 +32,6 @@ export function App() {
     },
     { path: '/forum', element: <Forum /> },
   ];
-
-  const signInWithDiscord = async () => {
-    const { data } = await supabase.auth.signInWithOAuth({
-      provider: 'discord',
-    });
-    localStorage.setItem(
-      'sb-mtpdbpclldolqxsljepu-auth-token',
-      JSON.stringify(data)
-    );
-    setUser(data);
-    localStorage.getItem('sb-mtpdbpclldolqxsljepu-auth-token') &&
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-  };
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -63,19 +49,10 @@ export function App() {
     }
   }, [dispatch, user, userName, userAvatar]);
 
-  // React.useEffect(() => {
-  //   if (user === null) {
-  //     window.location.reload();
-  //   }
-  // }, [user]);
-
   return (
     <BrowserRouter>
-
-      <Navbar
-        onSignOut={() => signOut()}
-        onConnect={() => signInWithDiscord()}
-      />
+      <Navbar onSignOut={() => signOut()} onConnect={() => setModal(true)} />
+      <ConnectionModal show={modal} closeModal={() => setModal(false)} />
       <Routes>
         {AppRoutes.map((route, index) => (
           <Route key={index} path={route.path} element={route.element} />

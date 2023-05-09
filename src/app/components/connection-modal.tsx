@@ -1,22 +1,27 @@
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { Auth } from '@supabase/auth-ui-react';
 import { supabase } from '../config';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 
-export default function ConnectionModal() {
-  const [open, setOpen] = useState(true);
+export interface ConnectionModalProps {
+  show: boolean;
+  closeModal: () => void;
+}
 
+export const ConnectionModal: React.FC<ConnectionModalProps> = ({
+  show,
+  closeModal,
+}) => {
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition.Root show={show} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
-        onClose={setOpen}
+        onClose={closeModal}
       >
         <Transition.Child
           as={Fragment}
@@ -27,7 +32,7 @@ export default function ConnectionModal() {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-neutral-800 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0  bg-neutral-800 bg-opacity-75 transition-opacity" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -45,11 +50,13 @@ export default function ConnectionModal() {
                 <Auth
                   supabaseClient={supabase}
                   socialLayout="horizontal"
-                  appearance={{ theme: ThemeSupa }}
+                  appearance={{
+                    theme: ThemeSupa,
+                    className: { input: 'text-white' },
+                  }}
                   providers={['discord', 'google']}
                   localization={{
                     variables: {
-
                       sign_in: {
                         email_label: 'Votre adresse mail',
                         password_label: 'Mot de passe',
@@ -57,7 +64,7 @@ export default function ConnectionModal() {
                         password_input_placeholder: '',
                         button_label: 'Se connecter',
                         social_provider_text: '',
-                        link_text: 'Déjà insrit ? Connectez-vous'
+                        link_text: 'Déjà inscrit ? Connectez-vous',
                       },
                       forgotten_password: {
                         button_label: 'Envoyer',
@@ -83,4 +90,4 @@ export default function ConnectionModal() {
       </Dialog>
     </Transition.Root>
   );
-}
+};
