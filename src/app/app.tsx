@@ -6,7 +6,6 @@ import React from 'react';
 import { supabase } from './config';
 import { Navbar } from './components/navbar';
 import { ConnectionModal } from './components/connection-modal';
-import { SupabaseClient } from '@supabase/supabase-js';
 
 interface AppRoutes {
   path: string;
@@ -48,14 +47,9 @@ export function App() {
   }, []);
 
   React.useEffect(() => {
-    console.log(user);
-
     if (user) {
       const userName = user?.user?.user_metadata?.full_name;
       const userAvatar = user?.user?.user_metadata?.avatar_url;
-
-      console.log(userName, userAvatar);
-
       dispatch({ type: 'SET_USER_NAME', userName });
       dispatch({ type: 'SET_USER_AVATAR', userAvatar });
     }
