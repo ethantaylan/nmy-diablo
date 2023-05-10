@@ -10,6 +10,9 @@ body,
   background-color: rgb(10, 10, 10);
 }
 
+#root {
+  padding: 8px;
+}
 .active {
   color: white;
 }

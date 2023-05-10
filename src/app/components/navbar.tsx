@@ -1,5 +1,5 @@
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { DisconnectIcon, UserIcon } from '../icons/icons';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { UserIcon } from '../icons/icons';
 import { useGlobalContext } from '../context/context';
 import React from 'react';
 
@@ -36,9 +36,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnect, onSignOut }) => {
     { title: 'Autres' },
   ];
 
+  React.useEffect(() => {
+    menu && window.addEventListener('click', () => setMenu(false));
+  }, [menu]);
 
   return (
-    <div className="w-100 flex h-20 items-center justify-between bg-neutral-950 p-5 ">
+    <div className="w-100 flex h-20 items-center justify-between bg-neutral-950">
       <span
         onClick={() => navigate('/')}
         className="cursor-pointer font-bold text-white"
@@ -57,7 +60,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnect, onSignOut }) => {
       {userName ? (
         <div className="relative flex flex-col">
           <div
-            onClick={() => setMenu(!menu)}
+            onClick={(event) => {
+              event.stopPropagation();
+              setMenu(!menu);
+            }}
             className="flex cursor-pointer items-center rounded-full"
           >
             <span className="me-3 text-neutral-400">{userName}</span>
@@ -72,8 +78,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnect, onSignOut }) => {
               style={{ top: 30, left: -40 }}
               className="absolute flex flex-col rounded-md bg-gray-100 text-black"
             >
-              {Menus.map((menu) => (
+              {Menus.map((menu, index) => (
                 <li
+                  key={index}
                   onClick={menu.onClick}
                   className="cursor-pointer px-4 hover:rounded-md hover:bg-slate-300"
                 >
