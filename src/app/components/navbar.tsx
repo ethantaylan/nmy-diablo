@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { UserIcon } from '../icons/icons';
 import { useGlobalContext } from '../context/context';
+import NmyLogo from '../assets/logo.png';
 import React from 'react';
 
 export interface Links {
@@ -41,13 +42,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnect, onSignOut }) => {
   }, [menu]);
 
   return (
-    <div className="w-100 flex h-20 items-center justify-between bg-neutral-950">
-      <span
+    <div className="w-100 flex h-20 items-center justify-between bg-neutral-950 px-4">
+      <div
         onClick={() => navigate('/')}
-        className="cursor-pointer font-bold text-white"
+        className="flex cursor-pointer items-center font-bold text-white"
       >
-        ENEMY
-      </span>
+        <img className="w-11" src={NmyLogo} alt="NMY logo" />
+        <span className="text-3xl font-black italic">ENEMY</span>
+      </div>
       <ul className="flex">
         {Links.map((link, index) => (
           <li key={index} className="mx-4">
@@ -70,7 +72,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnect, onSignOut }) => {
             <img
               className="w-6 rounded-full border-2 border-zinc-500"
               src={userAvatar}
-              alt=""
+              alt="User avatar"
             />
           </div>
           {menu && (
