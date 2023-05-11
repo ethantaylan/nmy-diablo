@@ -26,7 +26,7 @@ export const ForumSideBar = () => {
     <div className="w-full rounded rounded-s-none text-white">
       <div className="d-flex flex-row">
         <div className="mt-5 flex w-6/12 flex-col">
-          <label className="text-neutral-300" htmlFor="search">
+          <label className="mb-1 text-neutral-300" htmlFor="search">
             Rechercher
           </label>
           <input
@@ -37,22 +37,25 @@ export const ForumSideBar = () => {
 
         {ForumTopics.map((topic) => (
           <div className="my-5 w-6/12 cursor-pointer rounded p-4 outline outline-1 outline-neutral-600">
-            <div className="flex  justify-between">
+            <div className="flex justify-between">
               <div className="flex w-full flex-col">
                 <span className="mb-2">{topic.title}</span>
                 <span className="text-neutral-400">{topic.description}</span>
               </div>
               <div className="me-5 flex flex-col items-center">
-                <span>Vues</span>
-                <span>{topic.views}</span>
+                <small>
+                  Vues <br /> {topic.views}
+                </small>
               </div>
               <div className="flex flex-col items-center">
-                <span>Postes</span>
-                <span>{topic.views}</span>
+                <small>
+                  Postes <br /> {topic.views}
+                </small>
               </div>
             </div>
           </div>
         ))}
+        
       </div>
     </div>
   );
