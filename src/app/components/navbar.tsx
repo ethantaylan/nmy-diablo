@@ -53,7 +53,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnect, onSignOut }) => {
       <ul className="flex">
         {Links.map((link, index) => (
           <li key={index} className="mx-4">
-            <NavLink className="font-bold text-gray-400" to={link.href}>
+            <NavLink className="font-bold text-neutral-400" to={link.href}>
               {link.title.toUpperCase()}
             </NavLink>
           </li>
@@ -68,9 +68,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnect, onSignOut }) => {
             }}
             className="flex cursor-pointer items-center rounded-full"
           >
-            <span className="me-3 text-neutral-400">{userName}</span>
+            <span className="me-3 text-white">{userName}</span>
             <img
-              className="w-6 rounded-full border-2 border-zinc-500"
+              className="w-6 rounded-full border-2 border-neutral-700"
               src={userAvatar}
               alt="User avatar"
             />

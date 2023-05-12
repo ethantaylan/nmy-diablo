@@ -16,10 +16,7 @@ export const Banner = () => {
     >
       <div className="flex flex-col items-center justify-center">
         <span className="mb-5 text-6xl font-bold">ENEMY</span>
-        <span
-          style={{ letterSpacing: 2 }}
-          className="text-xl text-neutral-400"
-        >
+        <span style={{ letterSpacing: 2 }} className="text-xl text-neutral-400">
           AMATEUR GAMERS & E-SPORT ORGANIZATION
         </span>
       </div>
