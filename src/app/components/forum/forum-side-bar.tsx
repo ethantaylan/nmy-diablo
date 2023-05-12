@@ -1,3 +1,4 @@
+import { useGlobalContext } from 'src/app/context/context';
 import { Input } from './forum-searchbar';
 import { ForumTopics } from './forum-topics';
 import { RecentSubjectBar, RecentSubjectBarProps } from './recent-subject-bar';
@@ -10,6 +11,8 @@ export interface ForumTopics {
 }
 
 export const ForumSideBar = () => {
+  const { userAvatar } = useGlobalContext();
+
   const Topics: ForumTopics[] = [
     {
       title: 'Discussions générales',
@@ -34,6 +37,7 @@ export const ForumSideBar = () => {
       topic: 'Discussions générales',
       date: '01/01/2023',
       time: '20h55',
+      authorAvatar: userAvatar,
     },
     {
       title: 'New clan',
@@ -43,6 +47,7 @@ export const ForumSideBar = () => {
       topic: 'Discussions générales',
       date: '01/01/2023',
       time: '20h55',
+      authorAvatar: userAvatar,
     },
   ];
 
@@ -77,6 +82,7 @@ export const ForumSideBar = () => {
             topic={subject.topic}
             date={subject.date}
             time={subject.time}
+            authorAvatar={subject.authorAvatar}
           />
         ))}
       </div>

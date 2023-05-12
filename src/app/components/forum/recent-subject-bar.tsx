@@ -7,6 +7,7 @@ export interface RecentSubjectBarProps {
   topic: string;
   date: string;
   time: string;
+  authorAvatar: string;
 }
 
 export const RecentSubjectBar: React.FC<RecentSubjectBarProps> = ({
@@ -16,6 +17,7 @@ export const RecentSubjectBar: React.FC<RecentSubjectBarProps> = ({
   topic,
   date,
   time,
+  authorAvatar,
 }) => {
   return (
     <div className="my-4 flex justify-between whitespace-nowrap rounded border border-neutral-700 bg-neutral-900 p-2">
@@ -27,14 +29,19 @@ export const RecentSubjectBar: React.FC<RecentSubjectBarProps> = ({
           </span>
         </div>
         <div className="flex w-full justify-between text-neutral-400">
-          <small className="">
+          <small>
             le:{' '}
             <span className="text-neutral-300">
               {date} à {time}
             </span>
           </small>
-          <small className="">
-            par: <span className="text-neutral-300">{author}</span>
+          <small className='flex'>
+            par: <span className="flex ms-1 text-neutral-300">{author}</span>
+            <img
+              className="w-5 ms-1 rounded-full"
+              src={authorAvatar}
+              alt="author avatar"
+            />
           </small>
           <small>
             dans: <span className="text-neutral-300">{topic}</span>
