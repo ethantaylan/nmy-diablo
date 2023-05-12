@@ -35,10 +35,10 @@ export const RecentSubjectBar: React.FC<RecentSubjectBarProps> = ({
               {date} à {time}
             </span>
           </small>
-          <small className='flex'>
-            par: <span className="flex ms-1 text-neutral-300">{author}</span>
+          <small className="flex">
+            par: <span className="ms-1 flex text-neutral-300">{author}</span>
             <img
-              className="w-5 ms-1 rounded-full"
+              className="ms-1 w-5 rounded-full"
               src={authorAvatar}
               alt="author avatar"
             />
