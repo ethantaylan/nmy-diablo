@@ -15,7 +15,6 @@ export interface SubjectData {
   title?: string;
 }
 
-
 export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
   const [subjectsData, setSubjectsData] = React.useState<SubjectData[]>([]);
 
@@ -39,13 +38,6 @@ export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
     getData();
   }, []);
 
-  const [date, time] = subjectsData.map((data) => data.created_at?.toString() || '').split("T");
-  const formattedTime = time.slice(0, -10); // Remove the microseconds and timezone offset
-  
-  console.log(date); // "2023-05-12"
-  console.log(formattedTime); // "09:46:32"
-  
-
   return (
     <div className="text-xl text-white">
       <span>Discussions generales</span>
@@ -61,18 +53,6 @@ export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
           withAuthor
         />
       ))}
-
-      <ForumTopics
-        title={'New title'}
-        description={'New description'}
-        onClick={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-        author="efsaN"
-        date="19/02/1999"
-        withDate
-        withAuthor
-      />
     </div>
   );
 };

@@ -10,6 +10,7 @@ import { DiscussionsGenerales } from './forum/discussions-generales';
 import { Guides } from './forum/guides';
 import { Autres } from './forum/autres';
 import { BackIcon } from '../icons/icons';
+import { NewSubjectModal } from '../components/forum/new-subject-modal';
 
 export interface ForumTopics {
   title: string;
@@ -21,6 +22,7 @@ export interface ForumTopics {
 
 export const Forum: React.FC = () => {
   const [activeIndex, setActiveIndex] = React.useState<number>(0);
+  const [isModal, setIsModal] = React.useState<boolean>(false);
 
   const { userAvatar } = useGlobalContext();
 
@@ -76,8 +78,11 @@ export const Forum: React.FC = () => {
       <h1 className="mt-5 text-4xl font-bold text-white">FORUM</h1>
       <div className="flex w-full flex-row justify-between rounded rounded-s-none text-white">
         <div className="mb-5 mt-5 flex w-8/12 flex-col">
-          <Input />
-
+          <Input placeholder='Rechercher' />
+          <NewSubjectModal
+            show={isModal}
+            closeModal={() => setIsModal(false)}
+          />
           {activeIndex > 0 && (
             <span
               className="my-5 flex cursor-pointer items-center"
@@ -104,7 +109,10 @@ export const Forum: React.FC = () => {
         <div className="ml-5 mt-5 w-4/12">
           <div className="flex justify-between">
             <span>Sujets récents</span>
-            <button className="rounded bg-green-500 px-5">
+            <button
+              onClick={() => setIsModal(true)}
+              className="rounded bg-green-500 px-5"
+            >
               + Créer un nouveau sujets
             </button>
           </div>

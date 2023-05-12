@@ -60,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnect, onSignOut }) => {
         ))}
       </ul>
       {userName ? (
-        <div className="relative flex flex-col">
+        <div className="relative w-full items-end flex flex-col">
           <div
             onClick={(event) => {
               event.stopPropagation();

@@ -26,7 +26,7 @@ export const ForumTopics: React.FC<ForumTopicsProps> = ({
     >
       <div className="flex flex-col justify-between">
         <div className="flex w-full flex-col">
-          <span className="mb-2">{title}</span>
+          <span>{title}</span>
           <span className="overflow-hidden text-ellipsis text-base text-neutral-400">
             {description}
           </span>
@@ -38,12 +38,12 @@ export const ForumTopics: React.FC<ForumTopicsProps> = ({
               withAuthor && withDate && 'left'
             } center`}
           >
-            <div className="mt-3 flex h-full justify-between">
+            <div className="flex h-full justify-between">
               {withAuthor && (
-                <span className="text-sm text-neutral-400">par: {author}</span>
+                <small className="text-neutral-500">par: {author}</small>
               )}
               {withDate && (
-                <span className="text-sm ms-5 text-neutral-400">le: {date}</span>
+                <small className="ms-5 text-neutral-500">le: {date}</small>
               )}
             </div>
           </div>
