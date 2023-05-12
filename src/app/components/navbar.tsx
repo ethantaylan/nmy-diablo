@@ -42,10 +42,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnect, onSignOut }) => {
   }, [menu]);
 
   return (
-    <div className="w-100 flex h-20 items-center justify-between bg-neutral-950 px-4">
+    <div className="w-full flex h-20 items-center justify-between bg-neutral-950 px-4">
       <div
         onClick={() => navigate('/')}
-        className="flex cursor-pointer items-center font-bold text-white"
+        className="flex cursor-pointer items-center font-bold w-full text-white"
       >
         <img className="w-11" src={NmyLogo} alt="NMY logo" />
         <span className="text-3xl font-black italic">ENEMY</span>
@@ -93,7 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnect, onSignOut }) => {
           )}
         </div>
       ) : (
-        <span className="cursor-pointer text-white" onClick={onConnect}>
+        <span className="cursor-pointer w-full flex justify-end text-white" onClick={onConnect}>
           {UserIcon('h-5')}
         </span>
       )}

@@ -1,5 +1,5 @@
 import React from 'react';
-import BannerBg from '../assets/bg.jpg';
+import BannerBg from '../../assets/bg.jpg';
 
 export const Banner = () => {
   const bannerSyle: React.CSSProperties = {

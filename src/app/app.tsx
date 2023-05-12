@@ -6,6 +6,7 @@ import React from 'react';
 import { supabase } from './config';
 import { Navbar } from './components/navbar';
 import { ConnectionModal } from './components/connection-modal';
+import { DiscussionsGenerales } from './pages/forum/discussions-generales';
 
 interface AppRoutes {
   path: string;

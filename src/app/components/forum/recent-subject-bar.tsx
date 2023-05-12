@@ -20,7 +20,7 @@ export const RecentSubjectBar: React.FC<RecentSubjectBarProps> = ({
   authorAvatar,
 }) => {
   return (
-    <div className="my-4 flex justify-between whitespace-nowrap rounded border border-neutral-700 bg-neutral-900 p-2">
+    <div className="my-4 flex justify-between whitespace-nowrap rounded border border-neutral-700 bg-neutral-900 p-3">
       <div className="flex w-full flex-col justify-between">
         <div className="mb-3 flex w-full">
           <span className="me-3 font-bold">{title}</span>
