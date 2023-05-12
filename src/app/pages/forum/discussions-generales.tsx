@@ -31,7 +31,6 @@ export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
     if (data) {
       setSubjectsData(data);
     }
-    console.log(subjectsData);
   };
 
   React.useEffect(() => {

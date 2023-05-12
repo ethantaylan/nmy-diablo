@@ -19,18 +19,26 @@ export const NewSubjectModal: React.FC<NewSubjectModalProps> = ({
   const [topic, setTopic] = React.useState<string>('');
 
   const cancelButtonRef = useRef(null);
+  const selectRef = useRef<HTMLSelectElement>(null);
 
   const { userName } = useGlobalContext();
 
-  const addNewSubject = async () => {
-    const { data, error } = await supabase
-      .from('discussions-generales')
-      .insert([{ author: userName, title, subject: subject }]);
+  interface TopicTableMap {
+    [key: string]: string;
+  }
+  
+  const topicTableMap: TopicTableMap = {
+    'Autres': 'autres',
+    'Discussions Générales': 'discussions-generales',
+    'Guides': 'guides',
   };
 
-  React.useEffect(() => {
-    console.log(subject);
-  }, [subject]);
+  const addNewSubject = async () => {
+    const tableName = topicTableMap[topic];
+    const { data, error } = await supabase
+      .from(tableName)
+      .insert([{ author: userName, title, subject: subject }]);
+  };
 
   return (
     <Transition.Root show={show} as={Fragment}>
@@ -68,6 +76,10 @@ export const NewSubjectModal: React.FC<NewSubjectModalProps> = ({
                   <span className="mb-2">Topic</span>
 
                   <select
+                    onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
+                      setTopic(event.target.value)
+                    }
+                    ref={selectRef}
                     className="mb-2 rounded border border-neutral-600 bg-neutral-800 px-2 py-2 outline-neutral-100 focus:border-0"
                     name="select for topics"
                     id="topics-select"
