@@ -1,6 +1,6 @@
-import { error } from 'console';
 import React from 'react';
 import { ForumTopics } from 'src/app/components/forum/forum-topics';
+import { SubjectModal } from 'src/app/components/forum/subject-modal';
 import { supabase } from 'src/app/config';
 
 export interface DiscussionsGeneralesProps {
@@ -15,8 +15,18 @@ export interface SubjectData {
   title?: string;
 }
 
+export interface SubjectModalData {
+  title: string;
+  description: string;
+  date: string;
+  author: string;
+}
+
 export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
   const [subjectsData, setSubjectsData] = React.useState<SubjectData[]>([]);
+  const [isModal, setIsModal] = React.useState<boolean>(false);
+
+  const [subjectModalTitle, setSubjectModalTitle] = React.useState<string>('')
 
   const getData = async () => {
     const { data, error } = await supabase
@@ -37,12 +47,38 @@ export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
     getData();
   }, []);
 
+  const modalInformationsHandler = (
+    subjectTitle: string,
+    subjectDescription: string,
+    subjectAuthor: string,
+    subjectDate: string
+  ) => {
+    setSubjectModalTitle(subjectTitle)
+  };
+
   return (
     <div className="text-xl text-white">
-      <span>Discussions generales</span>
+      <span>Discussions générales</span>
+      <SubjectModal
+        show={isModal}
+        closeModal={() => setIsModal(false)}
+        subjectTitle={subjectModalTitle}
+        subjectDescription={''}
+        subjectDate={''}
+        subjectAuthor={''}
+      />
 
       {subjectsData.map((data: SubjectData, index: number) => (
         <ForumTopics
+          onClick={() => {
+            setIsModal(true);
+            modalInformationsHandler(
+              data.title || '',
+              data.subject || '',
+              data.author || '',
+              data.created_at || ''
+            );
+          }}
           key={index}
           title={data.title || ''}
           description={data.subject || ''}

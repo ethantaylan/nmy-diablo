@@ -113,7 +113,7 @@ export const Forum: React.FC = () => {
               onClick={() => setIsModal(true)}
               className="rounded bg-green-500 px-5"
             >
-              + Créer un nouveau sujets
+              + Créer un nouveau sujet
             </button>
           </div>
 
