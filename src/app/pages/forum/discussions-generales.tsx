@@ -26,7 +26,12 @@ export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
   const [subjectsData, setSubjectsData] = React.useState<SubjectData[]>([]);
   const [isModal, setIsModal] = React.useState<boolean>(false);
 
-  const [subjectModalTitle, setSubjectModalTitle] = React.useState<string>('')
+  const [subjectModal, setSubjectModal] = React.useState({
+    title: '',
+    description: '',
+    author: '',
+    date: '',
+  });
 
   const getData = async () => {
     const { data, error } = await supabase
@@ -53,7 +58,13 @@ export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
     subjectAuthor: string,
     subjectDate: string
   ) => {
-    setSubjectModalTitle(subjectTitle)
+    setSubjectModal({
+      ...subjectModal,
+      title: subjectTitle,
+      description: subjectDescription,
+      author: subjectAuthor,
+      date: subjectDate,
+    });
   };
 
   return (
@@ -62,10 +73,10 @@ export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
       <SubjectModal
         show={isModal}
         closeModal={() => setIsModal(false)}
-        subjectTitle={subjectModalTitle}
-        subjectDescription={''}
-        subjectDate={''}
-        subjectAuthor={''}
+        subjectTitle={subjectModal.title}
+        subjectDescription={subjectModal.description}
+        subjectDate={subjectModal.date}
+        subjectAuthor={subjectModal.author}
       />
 
       {subjectsData.map((data: SubjectData, index: number) => (

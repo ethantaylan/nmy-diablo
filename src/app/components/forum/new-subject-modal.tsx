@@ -1,7 +1,6 @@
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import React from 'react';
-import { Input } from './forum-searchbar';
 import { supabase } from 'src/app/config';
 import { useGlobalContext } from 'src/app/context/context';
 
@@ -16,7 +15,7 @@ export const NewSubjectModal: React.FC<NewSubjectModalProps> = ({
 }) => {
   const [title, setTitle] = React.useState<string>('');
   const [subject, setSubject] = React.useState<string>('');
-  const [topic, setTopic] = React.useState<string>('');
+  const [topic, setTopic] = React.useState<string>('Discussions Générales');
 
   const cancelButtonRef = useRef(null);
   const selectRef = useRef<HTMLSelectElement>(null);
@@ -26,11 +25,11 @@ export const NewSubjectModal: React.FC<NewSubjectModalProps> = ({
   interface TopicTableMap {
     [key: string]: string;
   }
-  
+
   const topicTableMap: TopicTableMap = {
-    'Autres': 'autres',
+    Autres: 'autres',
     'Discussions Générales': 'discussions-generales',
-    'Guides': 'guides',
+    Guides: 'guides',
   };
 
   const addNewSubject = async () => {
@@ -104,7 +103,7 @@ export const NewSubjectModal: React.FC<NewSubjectModalProps> = ({
                       setSubject(event.target.value)
                     }
                     value={subject}
-                    className="mb-2 rounded border border-neutral-600 bg-neutral-800 px-2 py-2 outline-neutral-100 focus:border-0"
+                    className="mb-2 h-60 rounded border border-neutral-600 bg-neutral-800 px-2 py-2 outline-neutral-100 focus:border-0"
                   />
 
                   <div className="flex w-full justify-center">

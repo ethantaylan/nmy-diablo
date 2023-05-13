@@ -1,6 +1,7 @@
 import { Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import React from 'react';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 export interface SubjectModalProps {
   show: boolean;
@@ -53,10 +54,12 @@ export const SubjectModal: React.FC<SubjectModalProps> = ({
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-neutral-900 p-5 text-left text-white shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <p>{subjectTitle}</p>
-                <p>{subjectDescription}</p>
-                <p>{subjectAuthor}</p>
-                <p>{subjectDate}</p>
+                <p className="my-2 text-xl">{subjectTitle}</p>
+                <ReactMarkdown className='text-neutral-200" my-2'>
+                  {subjectDescription}
+                </ReactMarkdown>
+                <p className="text-sm text-neutral-400">par: {subjectAuthor}</p>
+                <p className="text-sm text-neutral-400">le: {subjectDate}</p>
               </Dialog.Panel>
             </Transition.Child>
           </div>
