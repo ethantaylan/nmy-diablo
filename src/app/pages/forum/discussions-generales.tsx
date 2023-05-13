@@ -10,7 +10,7 @@ export interface DiscussionsGeneralesProps {
 export interface SubjectData {
   author?: string;
   created_at?: string;
-  id?: number;
+  id?: number | null;
   subject?: string;
   title?: string;
 }
@@ -20,17 +20,18 @@ export interface SubjectModalData {
   description: string;
   date: string;
   author: string;
+  id: number | null;
 }
 
 export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
   const [subjectsData, setSubjectsData] = React.useState<SubjectData[]>([]);
   const [isModal, setIsModal] = React.useState<boolean>(false);
-
-  const [subjectModal, setSubjectModal] = React.useState({
+  const [subjectModal, setSubjectModal] = React.useState<any>({
     title: '',
     description: '',
     author: '',
     date: '',
+    id: null,
   });
 
   const getData = async () => {
@@ -56,7 +57,8 @@ export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
     subjectTitle: string,
     subjectDescription: string,
     subjectAuthor: string,
-    subjectDate: string
+    subjectDate: string,
+    subjectId: number | null
   ) => {
     setSubjectModal({
       ...subjectModal,
@@ -64,7 +66,16 @@ export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
       description: subjectDescription,
       author: subjectAuthor,
       date: subjectDate,
+      id: subjectId,
     });
+    console.log(subjectId);
+  };
+
+  const deleteSubject = async (id: number) => {
+    await supabase.from('discussions-generales').delete()
+    .eq('id', id);
+    setIsModal(false)
+    getData()
   };
 
   return (
@@ -77,6 +88,7 @@ export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
         subjectDescription={subjectModal.description}
         subjectDate={subjectModal.date}
         subjectAuthor={subjectModal.author}
+        onDelete={() => deleteSubject(subjectModal.id)}
       />
 
       {subjectsData.map((data: SubjectData, index: number) => (
@@ -87,16 +99,17 @@ export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
               data.title || '',
               data.subject || '',
               data.author || '',
-              data.created_at || ''
+              data.created_at || '',
+              data.id || null
             );
           }}
           key={index}
           title={data.title || ''}
           description={data.subject || ''}
+          withAuthor
           withDate
           date={data.created_at}
           author={data.author}
-          withAuthor
         />
       ))}
     </div>

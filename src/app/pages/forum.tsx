@@ -78,7 +78,7 @@ export const Forum: React.FC = () => {
       <h1 className="mt-5 text-4xl font-bold text-white">FORUM</h1>
       <div className="flex w-full flex-row justify-between rounded rounded-s-none text-white">
         <div className="mb-5 mt-5 flex w-8/12 flex-col">
-          <Input placeholder='Rechercher' />
+          <Input placeholder="Rechercher" />
           <NewSubjectModal
             show={isModal}
             closeModal={() => setIsModal(false)}

@@ -34,7 +34,7 @@ export const NewSubjectModal: React.FC<NewSubjectModalProps> = ({
 
   const addNewSubject = async () => {
     const tableName = topicTableMap[topic];
-    const { data, error } = await supabase
+    await supabase
       .from(tableName)
       .insert([{ author: userName, title, subject: subject }]);
   };
@@ -108,7 +108,7 @@ export const NewSubjectModal: React.FC<NewSubjectModalProps> = ({
 
                   <div className="flex w-full justify-center">
                     <button
-                      onClick={() => addNewSubject()}
+                      onClick={closeModal}
                       className="mt-4 w-3/6 rounded bg-neutral-700"
                     >
                       Poster
