@@ -5,6 +5,9 @@ import { supabase } from 'src/app/config';
 
 export interface DiscussionsGeneralesProps {
   _?: any;
+  getData: () => void;
+  subjectsData: SubjectData[];
+  topicName: string;
 }
 
 export interface SubjectData {
@@ -23,8 +26,11 @@ export interface SubjectModalData {
   id: number | null;
 }
 
-export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
-  const [subjectsData, setSubjectsData] = React.useState<SubjectData[]>([]);
+export const OpenedTopic: React.FC<DiscussionsGeneralesProps> = ({
+  getData,
+  subjectsData,
+  topicName,
+}) => {
   const [isModal, setIsModal] = React.useState<boolean>(false);
   const [subjectModal, setSubjectModal] = React.useState<any>({
     title: '',
@@ -33,25 +39,6 @@ export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
     date: '',
     id: null,
   });
-
-  const getData = async () => {
-    const { data, error } = await supabase
-      .from('discussions-generales')
-      .select('*');
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    if (data) {
-      setSubjectsData(data);
-    }
-  };
-
-  React.useEffect(() => {
-    getData();
-  }, []);
 
   const modalInformationsHandler = (
     subjectTitle: string,
@@ -68,19 +55,26 @@ export const DiscussionsGenerales: React.FC<DiscussionsGeneralesProps> = () => {
       date: subjectDate,
       id: subjectId,
     });
-    console.log(subjectId);
   };
 
   const deleteSubject = async (id: number) => {
-    await supabase.from('discussions-generales').delete()
-    .eq('id', id);
-    setIsModal(false)
-    getData()
+    await supabase
+      .from(
+        topicName
+          .toLowerCase()
+          .replace(/ /g, '-')
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+      )
+      .delete()
+      .eq('id', id);
+    setIsModal(false);
+    getData();
   };
 
   return (
     <div className="text-xl text-white">
-      <span>Discussions générales</span>
+      <span>{topicName}</span>
       <SubjectModal
         show={isModal}
         closeModal={() => setIsModal(false)}

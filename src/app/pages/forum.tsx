@@ -6,11 +6,10 @@ import {
   RecentSubjectBarProps,
 } from '../components/forum/recent-subject-bar';
 import { useGlobalContext } from '../context/context';
-import { DiscussionsGenerales } from './forum/discussions-generales';
-import { Guides } from './forum/guides';
-import { Autres } from './forum/autres';
+import { OpenedTopic, SubjectData } from './forum/opened-topic';
 import { BackIcon } from '../icons/icons';
 import { NewSubjectModal } from '../components/forum/new-subject-modal';
+import { supabase } from '../config';
 
 export interface ForumTopics {
   title: string;
@@ -23,23 +22,35 @@ export interface ForumTopics {
 export const Forum: React.FC = () => {
   const [activeIndex, setActiveIndex] = React.useState<number>(0);
   const [isModal, setIsModal] = React.useState<boolean>(false);
+  const [subjectsData, setSubjectsData] = React.useState<SubjectData[]>([]);
+  const [topicName, setTopicName] = React.useState<string>(
+    ''
+  );
+
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
   const { userAvatar } = useGlobalContext();
 
   const Topics: ForumTopics[] = [
     {
-      title: 'Discussions générales',
+      title: topicName,
       description: 'Discussions diverses et variées sur des sujets généraux.',
       views: 11,
       posts: 2,
-      onClick: () => setActiveIndex(1),
+      onClick: () => {
+        setActiveIndex(1);
+        setTopicName('Discussions Générales');
+      },
     },
     {
       title: 'Guides',
       description: 'Builds, farms, etc...',
       views: 0,
       posts: 0,
-      onClick: () => setActiveIndex(2),
+      onClick: () => {
+        setActiveIndex(2);
+        setTopicName('Guides');
+      },
     },
 
     {
@@ -47,9 +58,17 @@ export const Forum: React.FC = () => {
       description: 'Tout le reste',
       views: 0,
       posts: 0,
-      onClick: () => setActiveIndex(3),
+      onClick: () => {
+        setActiveIndex(3);
+        setTopicName('Autres');
+      },
     },
   ];
+
+  React.useEffect(() => {
+    getData();
+    setIsLoading(false);
+  }, [topicName]);
 
   const RecentSubjects: RecentSubjectBarProps[] = [
     {
@@ -73,6 +92,37 @@ export const Forum: React.FC = () => {
     },
   ];
 
+  const getData = async () => {
+    const { data, error } = await supabase
+      .from(
+        topicName
+          .toLowerCase()
+          .replace(/ /g, '-')
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+      )
+      .select('*');
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    if (data) {
+      setSubjectsData(data);
+    }
+  };
+
+  React.useEffect(() => {
+    getData();
+  }, []);
+
+  const openedTopics = [
+    { index: 1, name: 'Discussions Générales' },
+    { index: 2, name: 'Guides' },
+    { index: 3, name: 'Autres' },
+  ];
+
   return (
     <div className="p-5">
       <h1 className="mt-5 text-4xl font-bold text-white">FORUM</h1>
@@ -82,6 +132,7 @@ export const Forum: React.FC = () => {
           <NewSubjectModal
             show={isModal}
             closeModal={() => setIsModal(false)}
+            refreshData={() => getData()}
           />
           {activeIndex > 0 && (
             <span
@@ -91,9 +142,19 @@ export const Forum: React.FC = () => {
               {BackIcon('flex h-5 mr-1')} Retour
             </span>
           )}
-          {activeIndex === 1 && <DiscussionsGenerales />}
-          {activeIndex === 2 && <Guides />}
-          {activeIndex === 3 && <Autres />}
+          {isLoading
+            ? 'Loading'
+            : openedTopics.map(
+                (topic) =>
+                  activeIndex === topic.index && (
+                    <OpenedTopic
+                      key={topic.index}
+                      subjectsData={subjectsData}
+                      getData={() => getData()}
+                      topicName={topic.name}
+                    />
+                  )
+              )}
 
           {activeIndex === 0 &&
             Topics.map((topic, index) => (

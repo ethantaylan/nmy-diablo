@@ -7,11 +7,13 @@ import { useGlobalContext } from 'src/app/context/context';
 export interface NewSubjectModalProps {
   show: boolean;
   closeModal: () => void;
+  refreshData: () => void;
 }
 
 export const NewSubjectModal: React.FC<NewSubjectModalProps> = ({
   show,
   closeModal,
+  refreshData,
 }) => {
   const [title, setTitle] = React.useState<string>('');
   const [subject, setSubject] = React.useState<string>('');
@@ -37,6 +39,7 @@ export const NewSubjectModal: React.FC<NewSubjectModalProps> = ({
     await supabase
       .from(tableName)
       .insert([{ author: userName, title, subject: subject }]);
+    refreshData();
   };
 
   return (
@@ -83,7 +86,7 @@ export const NewSubjectModal: React.FC<NewSubjectModalProps> = ({
                     name="select for topics"
                     id="topics-select"
                   >
-                    <option>Discussions générales</option>
+                    <option>Discussions Générales</option>
                     <option>Guides</option>
                     <option>Autres</option>
                   </select>
@@ -108,7 +111,10 @@ export const NewSubjectModal: React.FC<NewSubjectModalProps> = ({
 
                   <div className="flex w-full justify-center">
                     <button
-                      onClick={closeModal}
+                      onClick={() => {
+                        addNewSubject();
+                        closeModal();
+                      }}
                       className="mt-4 w-3/6 rounded bg-neutral-700"
                     >
                       Poster
