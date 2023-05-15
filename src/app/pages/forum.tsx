@@ -1,11 +1,6 @@
 import React from 'react';
 import { Input } from '../components/forum/forum-searchbar';
 import { ForumTopics } from '../components/forum/forum-topics';
-import {
-  RecentSubjectBar,
-  RecentSubjectBarProps,
-} from '../components/forum/recent-subject-bar';
-import { useGlobalContext } from '../context/context';
 import { OpenedTopic, SubjectData } from './forum/opened-topic';
 import { BackIcon } from '../icons/icons';
 import { NewSubjectModal } from '../components/forum/new-subject-modal';
@@ -24,16 +19,14 @@ export const Forum: React.FC = () => {
   const [isModal, setIsModal] = React.useState<boolean>(false);
   const [subjectsData, setSubjectsData] = React.useState<SubjectData[]>([]);
   const [topicName, setTopicName] = React.useState<string>(
-    ''
+    'Discussions Générales'
   );
 
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-
-  const { userAvatar } = useGlobalContext();
+  // const { userAvatar } = useGlobalContext();
 
   const Topics: ForumTopics[] = [
     {
-      title: topicName,
+      title: 'Discussions Générales',
       description: 'Discussions diverses et variées sur des sujets généraux.',
       views: 11,
       posts: 2,
@@ -67,30 +60,29 @@ export const Forum: React.FC = () => {
 
   React.useEffect(() => {
     getData();
-    setIsLoading(false);
   }, [topicName]);
 
-  const RecentSubjects: RecentSubjectBarProps[] = [
-    {
-      title: 'New clan',
-      description: 'Lorem Ipsum',
-      author: 'efsaN',
-      topic: 'Discussions générales',
-      date: '01/01/2023',
-      time: '20h55',
-      authorAvatar: userAvatar,
-    },
-    {
-      title: 'New clan',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque earum, consequatur laboriosam alias, explicabo dolorum quisquam illo iusto iure fugiat fuga excepturi itaque nostrum ex architecto unde, totam sapiente voluptatum?',
-      author: 'efsaN',
-      topic: 'Discussions générales',
-      date: '01/01/2023',
-      time: '20h55',
-      authorAvatar: userAvatar,
-    },
-  ];
+  // const RecentSubjects: RecentSubjectBarProps[] = [
+  //   {
+  //     title: 'New clan',
+  //     description: 'Lorem Ipsum',
+  //     author: 'efsaN',
+  //     topic: 'Discussions générales',
+  //     date: '01/01/2023',
+  //     time: '20h55',
+  //     authorAvatar: userAvatar,
+  //   },
+  //   {
+  //     title: 'New clan',
+  //     description:
+  //       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque earum, consequatur laboriosam alias, explicabo dolorum quisquam illo iusto iure fugiat fuga excepturi itaque nostrum ex architecto unde, totam sapiente voluptatum?',
+  //     author: 'efsaN',
+  //     topic: 'Discussions générales',
+  //     date: '01/01/2023',
+  //     time: '20h55',
+  //     authorAvatar: userAvatar,
+  //   },
+  // ];
 
   const getData = async () => {
     const { data, error } = await supabase
@@ -142,19 +134,17 @@ export const Forum: React.FC = () => {
               {BackIcon('flex h-5 mr-1')} Retour
             </span>
           )}
-          {isLoading
-            ? 'Loading'
-            : openedTopics.map(
-                (topic) =>
-                  activeIndex === topic.index && (
-                    <OpenedTopic
-                      key={topic.index}
-                      subjectsData={subjectsData}
-                      getData={() => getData()}
-                      topicName={topic.name}
-                    />
-                  )
-              )}
+          {openedTopics.map(
+            (topic) =>
+              activeIndex === topic.index && (
+                <OpenedTopic
+                  key={topic.index}
+                  subjectsData={subjectsData}
+                  getData={() => getData()}
+                  topicName={topic.name}
+                />
+              )
+          )}
 
           {activeIndex === 0 &&
             Topics.map((topic, index) => (
@@ -169,7 +159,7 @@ export const Forum: React.FC = () => {
 
         <div className="ml-5 mt-5 w-4/12">
           <div className="flex justify-between">
-            <span>Sujets récents</span>
+            {/* <span>Sujets récents</span> */}
             <button
               onClick={() => setIsModal(true)}
               className="rounded bg-green-500 px-5"
@@ -178,7 +168,7 @@ export const Forum: React.FC = () => {
             </button>
           </div>
 
-          {RecentSubjects.map((subject, index) => (
+          {/* {RecentSubjects.map((subject, index) => (
             <RecentSubjectBar
               key={index}
               title={subject.title}
@@ -189,7 +179,7 @@ export const Forum: React.FC = () => {
               time={subject.time}
               authorAvatar={subject.authorAvatar}
             />
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

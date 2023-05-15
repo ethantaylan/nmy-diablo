@@ -72,6 +72,8 @@ export const OpenedTopic: React.FC<DiscussionsGeneralesProps> = ({
     getData();
   };
 
+  console.log(subjectsData.length);
+
   return (
     <div className="text-xl text-white">
       <span>{topicName}</span>
@@ -85,27 +87,33 @@ export const OpenedTopic: React.FC<DiscussionsGeneralesProps> = ({
         onDelete={() => deleteSubject(subjectModal.id)}
       />
 
-      {subjectsData.map((data: SubjectData, index: number) => (
-        <ForumTopics
-          onClick={() => {
-            setIsModal(true);
-            modalInformationsHandler(
-              data.title || '',
-              data.subject || '',
-              data.author || '',
-              data.created_at || '',
-              data.id || null
-            );
-          }}
-          key={index}
-          title={data.title || ''}
-          description={data.subject || ''}
-          withAuthor
-          withDate
-          date={data.created_at}
-          author={data.author}
-        />
-      ))}
+      {subjectsData.length === 0 ? (
+        <div className='w-full flex py-5'>
+          <span className="text-neutral-500 rounded">Pas de sujets</span>
+        </div>
+      ) : (
+        subjectsData.map((data: SubjectData, index: number) => (
+          <ForumTopics
+            onClick={() => {
+              setIsModal(true);
+              modalInformationsHandler(
+                data.title || '',
+                data.subject || '',
+                data.author || '',
+                data.created_at || '',
+                data.id || null
+              );
+            }}
+            key={index}
+            title={data.title || ''}
+            description={data.subject || ''}
+            withAuthor
+            withDate
+            date={data.created_at}
+            author={data.author}
+          />
+        ))
+      )}
     </div>
   );
 };
